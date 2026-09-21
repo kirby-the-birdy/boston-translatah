@@ -94,6 +94,11 @@ So *"talk like a St. Louis rapper"* resolves out of parts that already exist:
 | `register` | 3 — deep local, the words outsiders don't have |
 | `scene` | `hip-hop` |
 
+**Set expectations honestly.** `hip-hop` carries two entries today (`the Lou`,
+`the 314`), so it is structure with barely any vocabulary behind it yet. Offer
+the mode, don't sell it as a full voice — say what's in it and let the lexicon
+fill in from contributors. That's what the repo is for.
+
 > **A scene selects vocabulary. A scene never touches pronunciation.**
 > This is the whole design, not a nicety. The accent stays whatever the region
 > already has — for `stl-314` that is `stl-314.yml`, unchanged, with the "urr"
