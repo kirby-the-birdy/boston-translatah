@@ -1,0 +1,4 @@
+phrase: "So do I."
+boston: "So don't I."
+region: boston
+sources: [{ type: url, ref: https://example.invalid/ }]

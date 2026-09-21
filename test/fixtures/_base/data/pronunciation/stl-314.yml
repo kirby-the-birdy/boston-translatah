@@ -1,0 +1,15 @@
+- id: keep-the-r
+  name: Rhotic — keep every R
+  order: 1
+- id: or-to-ar
+  name: OR to AR
+  order: 2
+- id: intrusive-r-wash
+  name: Intrusive R
+  order: 3
+- id: french-flattening
+  name: Flatten the French
+  order: 4
+- id: northern-cities-shift
+  name: Northern cities shift
+  order: 5

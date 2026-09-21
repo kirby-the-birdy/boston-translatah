@@ -8,19 +8,32 @@
 // Deps: js-yaml, ajv. If they're missing, `npm install` first.
 
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
-import { join, dirname, basename } from "node:path";
+import { join, dirname, basename, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
 import Ajv from "ajv";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+// selfRoot is this repo — where the schemas live. They're part of the validator,
+// not part of what's being validated.
+const selfRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+// root is the data tree being checked. Normally the same repo. The override
+// exists so test/ can point the real validator at a deliberately-broken fixture
+// and read back exactly what a contributor would see. The messages ARE the
+// tutorial, so the messages are what gets tested — not a reimplementation of
+// them that can drift from the strings actually in use.
+//   node scripts/validate.mjs --root test/fixtures/unknown-region
+const rootFlag = process.argv.indexOf("--root");
+const root = rootFlag !== -1 && process.argv[rootFlag + 1]
+  ? resolve(process.argv[rootFlag + 1])
+  : selfRoot;
 const ajv = new Ajv({ allErrors: true });
 
-const lexiconSchema = JSON.parse(readFileSync(join(root, "schema/lexicon.schema.json")));
-const phraseSchema = JSON.parse(readFileSync(join(root, "schema/phrase.schema.json")));
+const lexiconSchema = JSON.parse(readFileSync(join(selfRoot, "schema/lexicon.schema.json")));
+const phraseSchema = JSON.parse(readFileSync(join(selfRoot, "schema/phrase.schema.json")));
 const validateLexicon = ajv.compile(lexiconSchema);
 const validatePhrase = ajv.compile(phraseSchema);
-const curriculumSchema = JSON.parse(readFileSync(join(root, "schema/curriculum.schema.json")));
+const curriculumSchema = JSON.parse(readFileSync(join(selfRoot, "schema/curriculum.schema.json")));
 const validateCurriculum = ajv.compile(curriculumSchema);
 
 // Region slugs and the region: field in both schemas agree on this shape.
@@ -122,14 +135,18 @@ function yield_file(file) {
   } catch (e) {
     return fail(file, `not valid YAML: ${e.message}`);
   }
+  // The rule we won't bend goes first, so it gets to say it in English. The
+  // schema also requires sources, and ajv gets there before this ever did —
+  // which meant the one rule this repo actually cares about was the one
+  // explaining itself worst, in the words "/sources must NOT have fewer than 1
+  // items". Order fixed; the test suite is what noticed.
+  if (doc && typeof doc === "object" && (!Array.isArray(doc.sources) || doc.sources.length === 0)) {
+    return fail(file, "no source cited — this is a dictionary, not a bathroom wall");
+  }
   const validate = isPhrase ? validatePhrase : validateLexicon;
   if (!validate(doc)) {
     const msg = validate.errors.map((e) => `${e.instancePath || "(root)"} ${e.message}`).join("; ");
     return fail(file, msg);
-  }
-  // Belt-and-suspenders on the one rule we care most about.
-  if (!Array.isArray(doc.sources) || doc.sources.length === 0) {
-    return fail(file, "no source cited — this is a dictionary, not a bathroom wall");
   }
   // The region has to be a city we actually speak, and the file has to live in it.
   if (!knownRegions.has(doc.region)) {

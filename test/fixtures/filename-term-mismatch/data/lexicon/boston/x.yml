@@ -1,0 +1,5 @@
+term: zzz
+means: a term whose filename doesn't match its slug
+region: boston
+register: 1
+sources: [{ type: url, ref: https://example.invalid/ }]

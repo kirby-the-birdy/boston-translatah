@@ -1,0 +1,15 @@
+from: boston
+to: stl-314
+name: Accent Addition — Boston to the 314
+lessons:
+  - order: 1
+    name: Give the R's back
+    learn: [keep-the-r]
+    unlearn: [drop-final-r, er-to-ah]
+  - order: 2
+    name: Stop putting R's between vowels
+    unlearn: [intrusive-rs]
+  - order: 3
+    name: Move OR toward AR
+    learn: [or-to-ar]
+sources: [{ type: url, ref: https://www.asha.org/ }]

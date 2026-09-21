@@ -1,0 +1,12 @@
+- slug: boston
+  name: Boston / general New England
+  accent: rules.yml
+
+- slug: brockton-508
+  name: Brockton / South Shore (the 508)
+  inherits: boston
+  accent: rules.yml
+
+- slug: stl-314
+  name: St. Louis (the 314)
+  accent: stl-314.yml

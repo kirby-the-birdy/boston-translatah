@@ -1,0 +1,7 @@
+- slug: boston
+  name: Boston / general New England
+  accent: rules.yml
+
+- slug: q
+  name: Region inheriting a stranger
+  inherits: nowhere

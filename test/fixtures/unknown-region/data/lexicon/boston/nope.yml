@@ -1,0 +1,5 @@
+term: nope
+means: a term filed under a city that isn't registered
+region: nope-999
+register: 1
+sources: [{ type: url, ref: https://example.invalid/ }]

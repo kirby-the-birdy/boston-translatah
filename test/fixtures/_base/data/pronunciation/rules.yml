@@ -1,0 +1,18 @@
+- id: drop-final-r
+  name: Drop the final R
+  order: 1
+- id: intrusive-r
+  name: Intrusive R
+  order: 2
+- id: er-to-ah
+  name: ER to AH
+  order: 3
+- id: broad-a
+  name: Broad A
+  order: 4
+- id: o-to-aw
+  name: O to AW
+  order: 5
+- id: fast-speech
+  name: Fast speech
+  order: 6

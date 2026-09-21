@@ -1,0 +1,6 @@
+phrase: "Park the car in Harvard Yard."
+local: "Pahk the cah in Hahvad Yahd."
+region: boston
+sources:
+  - type: url
+    ref: https://en.wikipedia.org/wiki/Boston_accent
